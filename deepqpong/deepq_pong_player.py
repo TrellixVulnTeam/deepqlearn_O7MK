@@ -5,24 +5,27 @@ from deepqpong.pygame_player.examples.pong_player import PongPlayer
 import tensorflow as tf
 import numpy as np
 import cv2
+import shutil
 from pygame.constants import K_DOWN, K_UP
+
 
 
 class DeepQPongPlayer(PongPlayer):
     ACTIONS_COUNT = 3  # number of valid actions. In this case up, still and down
     FUTURE_REWARD_DISCOUNT = 0.99  # decay rate of past observations
-    OBSERVATION_STEPS = 50000.  # time steps to observe before training
-    EXPLORE_STEPS = 500000.  # frames over which to anneal epsilon
-    INITIAL_RANDOM_ACTION_PROB = 1.0  # starting chance of an action being random
+    OBSERVATION_STEPS = 1000 # 50000.  # time steps to observe before training
+    EXPLORE_STEPS = 100000 # 500000.  # frames over which to anneal epsilon
+    INITIAL_RANDOM_ACTION_PROB = .9  # 1.0  # starting chance of an action being random
     FINAL_RANDOM_ACTION_PROB = 0.05  # final chance of an action being random
     MEMORY_SIZE = 500000  # number of observations to remember
     MINI_BATCH_SIZE = 100  # size of mini batches
-    STATE_FRAMES = 4  # number of frames to store in the state
-    RESIZED_SCREEN_X, RESIZED_SCREEN_Y = (80, 80)
+    STATE_FRAMES = 10 # 4 # number of frames to store in the state
+    RESIZED_SCREEN_X, RESIZED_SCREEN_Y = (80, 80) #(80, 80)
     OBS_LAST_STATE_INDEX, OBS_ACTION_INDEX, OBS_REWARD_INDEX, OBS_CURRENT_STATE_INDEX, OBS_TERMINAL_INDEX = range(5)
     SAVE_EVERY_X_STEPS = 10000
-    LEARN_RATE = 1e-6
+    LEARN_RATE = 1e-6 #.01 # 1e-3 #
     STORE_SCORES_LEN = 200.
+    DISPLAY_INTERVAL = 1
 
     def __init__(self, checkpoint_path="deep_q_pong_networks", playback_mode=False, verbose_logging=False):
         """
@@ -65,6 +68,12 @@ class DeepQPongPlayer(PongPlayer):
 
         if not os.path.exists(self._checkpoint_path):
             os.mkdir(self._checkpoint_path)
+        else:
+            shutil.rmtree(self._checkpoint_path, ignore_errors=True)
+            os.mkdir(self._checkpoint_path)
+
+
+
         self._saver = tf.train.Saver()
         checkpoint = tf.train.get_checkpoint_state(self._checkpoint_path)
 
@@ -122,11 +131,12 @@ class DeepQPongPlayer(PongPlayer):
                 self._probability_of_random_action -= \
                     (self.INITIAL_RANDOM_ACTION_PROB - self.FINAL_RANDOM_ACTION_PROB) / self.EXPLORE_STEPS
 
-            print("Time: %s random_action_prob: %s reward %s scores differential %s" %
-                  (self._time, self._probability_of_random_action, reward,
-                   sum(self._last_scores) / self.STORE_SCORES_LEN))
+            if self._time % self.DISPLAY_INTERVAL == 0: #and self._time > self.OBSERVATION_STEPS:
+                print("Time: %s random_action_prob: %s reward %s scores differential %s" %
+                      (self._time, self._probability_of_random_action, reward,
+                       sum(self._last_scores) / self.STORE_SCORES_LEN))
 
-        return DeepQPongPlayer._key_presses_from_action(self._last_action)
+        return self._key_presses_from_action(self._last_action)
 
     def _choose_next_action(self):
         new_action = np.zeros([self.ACTIONS_COUNT])
