@@ -88,7 +88,7 @@ Next, from project root dir, execute (use appropriate opencv version)
 Installation
 ------------
 
-To install package ``riskscore``, ``cd`` into project-dir and run
+To install package ``deepqlearn``, ``cd`` into project-dir and run
 
 .. code:: bash
 
@@ -109,13 +109,14 @@ To **update an existing installation**, ``cd`` into project-dir and run
 
 
 
+
 - Noes on ``setup.py``
 
     1) The ``setup.py`` script checks for requirements in ``./requirements.txt``
     (included in the package) and tries to install/upgrade dependencies.
 
     2) The default entry point is set to:
-    ``'console_scripts': ['riskscore=riskscore.run:run']``
+    ``'console_scripts': ['deepqlearn=']``
     which calls the risk scoring pipeline
 
 
@@ -131,20 +132,20 @@ from any working dir, run
 
 .. code:: bash
 
-    python -m riskscore.<modulename>
+    python -m deepqlearn.<modulename>
 
 e.g.
 
 .. code:: bash
 
-    python -m riskscore.preprocess
+    python -m deepqlearn.preprocess
 
 ``-m`` is required since module belongs to a package, and
 also note the missing ``.py`` extension after the module name
 
 
 Other way to run the code in ``__main__`` block is to
-``cd`` in to the ``riskscore/`` dir and run
+``cd`` in to the ``deepqlearn/`` dir and run
 
 .. code:: bash
 
@@ -153,7 +154,7 @@ Other way to run the code in ``__main__`` block is to
 Note the ``.py`` extension in this case.
 
 
-Experimental test cases can be found in ``riskscore/tests/``. To
+Experimental test cases can be found in ``deepqlearn/tests/``. To
 run these test cases, ``cd`` in to project dir and use
 
 .. code:: bash
