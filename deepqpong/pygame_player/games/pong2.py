@@ -323,7 +323,7 @@ while done==False:
         player1.score -= scorer.reward_loss
         scorer.reset()
         ball.speed.random_direction()
-        
+
 
 
 

@@ -1,0 +1,15 @@
+MANIFEST.in
+README.rst
+setup.py
+deepqpong/__init__.py
+deepqpong/deep_q_half_pong_player.py
+deepqpong/deep_q_pong_player.py
+deepqpong/deepq_pong_player.py
+deepqpong/pong_player.py
+deepqpong/qlearn.py
+deepqpong/tetris_player.py
+deepqpong.egg-info/PKG-INFO
+deepqpong.egg-info/SOURCES.txt
+deepqpong.egg-info/dependency_links.txt
+deepqpong.egg-info/not-zip-safe
+deepqpong.egg-info/top_level.txt
