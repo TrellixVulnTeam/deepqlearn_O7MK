@@ -10,19 +10,30 @@ Getting Started
 
 .. code :: sh
 
+    # MacOS
     cd deepqpong
     sudo easy_install pip
+    sudo pip install --upgrade virtualenv
+    virtualenv venv
+    source venv/bin/activate
+    
+    # linux(Ubuntu):  
+    cd deepqpong
+    sudo apt-get install --upgrade python-pip
     sudo pip install --upgrade virtualenv
     virtualenv venv
     source venv/bin/activate
 
 Install ``tensorflow``
 
+
     pip install --upgrade https://storage.googleapis.com/tensorflow/mac/tensorflow-0.7.1-cp27-none-any.whl
+
 
 .. code :: sh
 
     $ python
+
 
 .. code :: python
 
@@ -30,12 +41,14 @@ Install ``tensorflow``
 
 
 Install ``pygame``
+
 .. code :: sh
 
     pip install pygame
 
 
 Clone PyGamePlayer
+
 .. code :: sh
 
     mkdir deepqpong
